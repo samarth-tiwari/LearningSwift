@@ -8,22 +8,30 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-
+    
+    @IBOutlet private var profileImg: UIImageView!
+    @IBOutlet private var nameLabel: UILabel!
+    @IBOutlet private var ageLabel: UILabel!
+    @IBOutlet private var classLabel: UILabel!
+    private var student: Student!
+    
+    func presentStudent() {
+        guard let imgURL = URL(string: student.getImageLocation()) else { return }
+        guard let img = try? Data(contentsOf: imgURL) else { return }
+        profileImg.image = UIImage(data: img)
+        nameLabel.text = "Name: \(student.getName())"
+        classLabel.text = "Class: \(student.getClass())"
+        ageLabel.text = "Age: \(student.getAge())"
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        presentStudent()
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func setStudent(student: Student) {
+        self.student = student
     }
-    */
 
 }
