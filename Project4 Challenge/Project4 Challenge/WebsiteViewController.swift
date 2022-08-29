@@ -23,43 +23,30 @@ class WebsiteViewController: UIViewController, WKNavigationDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        let url = URL(string: "https://\(str)")!
         
+        let url = URL(string: "https://\(str)")!
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Open", style: .plain, target: self, action: #selector(openTapped))
-
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(webView.reload))
         
         progressView = UIProgressView(progressViewStyle: .default)
         progressView.sizeToFit()
-        let progressButton = UIBarButtonItem(customView: progressView)
         
+        let progressButton = UIBarButtonItem(customView: progressView)
         toolbarItems = [progressButton, spacer, refresh]
         navigationController?.isToolbarHidden = false
-        
-        
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
-
         webView.load(URLRequest(url: url))
         webView.allowsBackForwardNavigationGestures = true
-                
     }
-    
-    
-    
     
     @objc func openTapped() {
         let ac = UIAlertController(title: "Open Websites", message: nil, preferredStyle: .actionSheet)
-        
         for website in websites {
             ac.addAction(UIAlertAction(title: website, style: .default, handler: openPage))
         }
-        
         ac.addAction(UIAlertAction(title: "Title", style: .cancel))
         ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
-        
         present(ac, animated: true)
     }
     
@@ -72,16 +59,15 @@ class WebsiteViewController: UIViewController, WKNavigationDelegate {
         title = webView.title
     }
     
-    
-    /*  Key Value Observing KVO ****Read*/
+    /*  Key Value Observing KVO */
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "estimatedProgress" {
             progressView.progress = Float(webView.estimatedProgress)
         }
     }
+    
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         let url = navigationAction.request.url
-        
         if let host = url?.host {
             for website in websites {
                 if host.contains(website) {
@@ -90,18 +76,6 @@ class WebsiteViewController: UIViewController, WKNavigationDelegate {
                 }
             }
         }
-        
         decisionHandler(.cancel)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-
 }

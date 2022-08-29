@@ -26,7 +26,6 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         }
     }
 
-
     @objc func addNewPerson() {
         let picker = UIImagePickerController()
         picker.allowsEditing = true
@@ -34,13 +33,10 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         present(picker, animated: true)
     }
     
-    
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.editedImage] as? UIImage else {return}
         let imageName = UUID().uuidString
         let imagePath = getDocumentsDirectory().appendingPathComponent(imageName)
-        
         if let jpegData = image.jpegData(compressionQuality: 0.8) {
             try? jpegData.write(to: imagePath)
             
@@ -57,11 +53,11 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         return paths[0]
     }
     
-    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return people.count
         
     }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Person", for: indexPath) as? PersonCell else {
             fatalError("Unable to dequeue Person cell")
@@ -70,10 +66,9 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         cell.setText(person.name)
         let path = getDocumentsDirectory().appendingPathComponent(person.image)
         cell.setImage(path)
-        
-        
         return cell
     }
+    
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let ac = UIAlertController(title: "Enter name", message: nil, preferredStyle: .alert)
         ac.addTextField()
@@ -85,21 +80,18 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
             self?.collectionView.reloadData()
         })
         ac.addAction(UIAlertAction(title: "Cancel", style: .default))
-        
         ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(ac, animated: true)
     }
     
     func save() {
         let encoder = JSONEncoder()
-        
         if let savedData = try? encoder.encode(people) {
             let defaults = UserDefaults.standard
             defaults.set(savedData, forKey: "people")
         } else {
             print("Failed to save people.")
         }
-            
     }
 }
 

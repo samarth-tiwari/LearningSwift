@@ -11,18 +11,13 @@ class ViewController: UITableViewController {
     var petitions = [Petition]()
     var filteredPetitions = [Petition]()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         title = "Petitions"
-        
-        
-        
         let credits = UIBarButtonItem(title: "Credits", style: .plain, target: self, action: #selector(showCredits))
         let filter =  UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(filter))
         navigationItem.rightBarButtonItems = [filter,credits]
-        
         
         let urlString: String
 
@@ -42,11 +37,8 @@ class ViewController: UITableViewController {
                     return
                 }
             }
-            
             self?.showError()
-        
         }
-        
     }
     
     @objc func filter() {
@@ -79,7 +71,6 @@ class ViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    
     @objc func showCredits() {
         let ac = UIAlertController(title: "Credits", message: "This data was brought to you by \"We the people\" API of the White House", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default))
@@ -92,8 +83,6 @@ class ViewController: UITableViewController {
             ac.addAction(UIAlertAction(title: "OK", style: .default))
             self?.present(ac,animated: true)
         }
-        
-        
     }
     
     func parse(json: Data) {
@@ -111,7 +100,6 @@ class ViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredPetitions.count
-        
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -125,7 +113,6 @@ class ViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DetailViewController()
         vc.detailItem = filteredPetitions[indexPath.row]
-        
         navigationController?.pushViewController(vc, animated: true)
     }
 }

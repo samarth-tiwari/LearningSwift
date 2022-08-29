@@ -14,23 +14,16 @@ class ViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-        
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(promptForAnswer))
-        
         if let startWordsUrl = Bundle.main.url(forResource: "start", withExtension: "txt") {
             if let startWords = try? String(contentsOf: startWordsUrl) {
                 allWords = startWords.components(separatedBy: "\n")
             }
         }
-        
         if allWords.isEmpty {
             allWords = ["Silkworm"]
         }
-        
         startGame()
-        
     }
     
     func startGame() {
@@ -52,13 +45,11 @@ class ViewController: UITableViewController {
     @objc func promptForAnswer(){
         let ac = UIAlertController(title: "Add Answer", message: nil, preferredStyle: .alert)
         ac.addTextField()
-        
         let submitAction = UIAlertAction(title: "Submit", style: .default) {
             [weak self, weak ac] _ in
             guard let answer = ac?.textFields?[0].text else { return }
             self?.submit(answer)
         }
-        
         ac.addAction(submitAction)
         ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(ac,animated: true)

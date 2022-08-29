@@ -95,8 +95,6 @@ class ViewController: UIViewController {
                 letterButtons.append(letterButton)
             }
         }
-        
-        
 //        scoreLabel.backgroundColor = .magenta
 //        cluesLabel.backgroundColor = .red
 //        answersLabel.backgroundColor = .brown
@@ -129,12 +127,7 @@ class ViewController: UIViewController {
             buttonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             buttonsView.topAnchor.constraint(equalTo: submit.bottomAnchor, constant: 20),
             buttonsView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -20)
-            
-            // more constraints to be added here
         ])
-        
-        
-        
     }
     
     override func viewDidLoad() {
@@ -151,15 +144,12 @@ class ViewController: UIViewController {
     }
     
     @objc func submitTapped(_ sender: UIButton) {
-        
         guard let answerText = currentAnswer.text else {return}
-        
         if let solutionPosition = solutions.firstIndex(of: answerText) {
             activatedButtons.removeAll()
             var splitAnswers = answersLabel.text?.components(separatedBy: "\n")
             splitAnswers?[solutionPosition] = answerText
             answersLabel.text = splitAnswers?.joined(separator: "\n")
-            
             currentAnswer.text = ""
             score += 1
             
@@ -168,7 +158,6 @@ class ViewController: UIViewController {
                 ac.addAction(UIAlertAction(title: "Let's Go", style: .default, handler: levelUp))
                 present(ac,animated: true)
             }
-            
         } else {
             let ac = UIAlertController(title: "Wrong Answer", message: nil, preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Try Again", style: .default))
@@ -184,8 +173,6 @@ class ViewController: UIViewController {
         for button in letterButtons {
             button.isHidden = false
         }
-        
-        
     }
     
     @objc func clearTapped(_ sender: UIButton) {
@@ -219,7 +206,6 @@ class ViewController: UIViewController {
                     let bits =  answer.components(separatedBy: "|")
                     letterBits += bits
                 }
-                
             }
         }
         
@@ -233,5 +219,4 @@ class ViewController: UIViewController {
             }
         }
     }
-    
 }

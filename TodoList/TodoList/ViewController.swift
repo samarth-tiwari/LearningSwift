@@ -12,7 +12,6 @@ class ViewController: UITableViewController {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var todoList = [Todo]()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -47,19 +46,15 @@ class ViewController: UITableViewController {
         ac.addAction(UIAlertAction(title: "Cancel", style: .default))
         ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(ac, animated: true)
-        
     }
     
     func addTodo(_ body: String) {
         let item = Todo(context: context)
         item.create(task: body)
-        
         todoList.append(item)
         saveTodos()
-//        getTodos()
         tableView.reloadData()
     }
-    
     
     // tableview functions
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -69,13 +64,10 @@ class ViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = todoList[indexPath.row].body
-        
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .short
-        
         cell.detailTextLabel?.text = formatDate(date: todoList[indexPath.row].createdAt)
-        
         return cell
     }
     
@@ -87,7 +79,6 @@ class ViewController: UITableViewController {
         let txt = dateFormatter.string(from: _date)
         return txt
     }
-    
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let ac = UIAlertController(title: "Done the task?", message: "Click Done to remove item from list", preferredStyle: .alert)
