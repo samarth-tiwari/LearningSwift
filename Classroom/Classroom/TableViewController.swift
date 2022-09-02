@@ -8,14 +8,15 @@
 import UIKit
 
 class TableViewController: UITableViewController {
-    private var students: [Student]=[]
+    private var students: [Student] = []
     private var classNumber: Int?
+    private var sortedStudents: [Student] = []
     
     private func registerTableViewCells() {
         let cell = UINib(nibName: "ProfileCell",bundle: nil)
         tableView.register(cell, forCellReuseIdentifier: "cell")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         registerTableViewCells()
@@ -48,7 +49,10 @@ class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let student = students[indexPath.row]
         guard let vc = storyboard?.instantiateViewController(withIdentifier: "profile") as? ProfileViewController else { return }
+        vc.setClass(to: classNumber)
         vc.setStudent(student: student)
+        let percentile = calculatePercentile(index: indexPath.row)
+        vc.setPercentile(to: percentile)
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -58,5 +62,12 @@ class TableViewController: UITableViewController {
     
     func setStudents(data: [Student]) {
         students = data
+    }
+    
+    func calculatePercentile(index: Int) -> Double {
+        let student = students[index]
+        guard let location = students.sorted(by: {$0.getMarks() > $1.getMarks()}).firstIndex(of: student) else { fatalError("Student not found") }
+        let percentile = 100*(Double(students.count - location))/Double(students.count)
+        return percentile
     }
 }

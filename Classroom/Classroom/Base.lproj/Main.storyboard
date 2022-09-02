@@ -129,6 +129,12 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r9k-9G-IVf">
+                                <rect key="frame" x="20" y="452" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="hOw-Jl-nuS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -141,6 +147,8 @@
                             <constraint firstItem="fBy-UH-wkd" firstAttribute="leading" secondItem="hOw-Jl-nuS" secondAttribute="leading" constant="20" id="XAU-JS-pYN"/>
                             <constraint firstItem="O4c-ec-x3B" firstAttribute="top" secondItem="hOw-Jl-nuS" secondAttribute="top" constant="280" id="gHj-eh-Fa1"/>
                             <constraint firstItem="aqQ-S8-cOV" firstAttribute="top" secondItem="hOw-Jl-nuS" secondAttribute="top" constant="20" id="lMp-YW-NRL"/>
+                            <constraint firstItem="r9k-9G-IVf" firstAttribute="leading" secondItem="hOw-Jl-nuS" secondAttribute="leading" constant="20" id="ma0-eg-ITl"/>
+                            <constraint firstItem="r9k-9G-IVf" firstAttribute="top" secondItem="fBy-UH-wkd" secondAttribute="bottom" constant="20" id="oy4-S3-ApM"/>
                             <constraint firstItem="O4c-ec-x3B" firstAttribute="leading" secondItem="hOw-Jl-nuS" secondAttribute="leading" constant="20" id="uaR-ez-Zrv"/>
                         </constraints>
                     </view>
@@ -148,6 +156,7 @@
                         <outlet property="ageLabel" destination="fBy-UH-wkd" id="U2L-lG-nQd"/>
                         <outlet property="classLabel" destination="VpF-JN-F81" id="SWQ-lf-aP3"/>
                         <outlet property="nameLabel" destination="O4c-ec-x3B" id="TxJ-yz-TY6"/>
+                        <outlet property="passOrFailLabel" destination="r9k-9G-IVf" id="eGU-HS-8Ju"/>
                         <outlet property="profileImg" destination="aqQ-S8-cOV" id="WaH-zW-3AD"/>
                     </connections>
                 </viewController>
